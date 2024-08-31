@@ -169,7 +169,13 @@ def main():
             if username and password:
                 register_user(connection, username, password)
                 user_id = authenticate_user(connection, username, password)
-                st.success("User registered successfully.")
+                if user_id:
+                    st.session_state['user_id'] = user_id
+                    st.success("User logged in successfully.")
+                    st.rerun()
+                else:
+                    st.error("ERROR: Authentication failed")
+                st.success("User registered successfully. Please login")
                 st.rerun()
             else:
                 st.error("ERROR: Missing fields")
